@@ -530,3 +530,42 @@ html {
 .dark .testimonial-pagination .swiper-pagination-bullet:hover {
   background-color: #ff6806 !important; /* same orange for dark mode hover */
 }
+
+/* Marquee testimonials animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Marquee container with GPU acceleration and hover pause */
+.marquee-container {
+  will-change: transform;
+  transform: translateZ(0);
+  transition: animation-play-state 0.1s ease;
+}
+
+/* Pause animation on hover */
+.marquee-container:hover,
+.relative.overflow-hidden:hover .marquee-container {
+  animation-play-state: paused !important;
+}
+
+/* Enhanced hover effects for individual cards */
+.marquee-container .hover\:shadow-2xl:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.marquee-container .hover\:-translate-y-1:hover {
+  transform: translateY(-4px);
+}
+
+/* Responsive marquee adjustments */
+@media (max-width: 640px) {
+  .marquee-container {
+    animation-duration: 40s; /* Slower on mobile for better readability */
+  }
+}

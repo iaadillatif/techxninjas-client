@@ -22,7 +22,7 @@ import usePageTitle from '../usePageTitle';
 import CodingBackground from '../CodingBackground';
 import RevealOnScroll from '../RevealOnScroll';
 import AnimatedCounter from '../AnimatedCounter';
-import TestimonialsSlider from '../TestimonialsSlider';
+import TestimonialsMarquee from '../TestimonialsMarquee';
 import MentorsSlider from '../MentorsSlider';
 import { getTestimonials, getHomepageMentors } from '../../services/homeService';
 import { Testimonial, HomepageMentor } from '../../types';
@@ -307,7 +307,10 @@ const TestimonialsSection: React.FC = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-brand-primary"></div>
           </div>
         ) : (
-          <TestimonialsSlider testimonials={testimonials} />
+          <TestimonialsMarquee 
+            testimonials={testimonials} 
+            speed={500}
+          />
         )}
       </div>
     </section>
