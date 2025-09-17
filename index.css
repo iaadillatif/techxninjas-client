@@ -94,11 +94,14 @@ body {
 }
 
 /* Text truncation utilities */
+
 .line-clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  display: -webkit-box; /* For older WebKit browsers */
+  -webkit-line-clamp: 1; /* For older WebKit browsers */
+  -webkit-box-orient: vertical; /* For older WebKit browsers */
+  overflow: hidden; /* Fallback */
+  
+  line-clamp: 1; /* Standard property for modern browsers */
 }
 
 .line-clamp-2 {
@@ -106,6 +109,8 @@ body {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  
+  line-clamp: 2; /* Add this line */
 }
 
 .line-clamp-3 {
@@ -113,6 +118,8 @@ body {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  
+  line-clamp: 3; /* Add this line */
 }
 
 /* Logo optimization */
