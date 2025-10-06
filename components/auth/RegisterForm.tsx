@@ -143,6 +143,63 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, onSuccess 
           onChange={(e) => setPassword(e.target.value)}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm dark:bg-gray-700 dark:text-white"
         />
+        
+        {/* Password strength indicator */}
+        {password && (
+          (() => {
+            const getPasswordStrength = (pwd: string): { level: 'weak' | 'medium' | 'strong'; score: number } => {
+              if (!pwd) return { level: 'weak', score: 0 };
+
+              const commonPatterns = /(password|1234|qwerty|abcd|1111|0000|letmein|admin)/i;
+              if (commonPatterns.test(pwd)) return { level: 'weak', score: 1 };
+              if (/(.)\1{2,}/.test(pwd)) return { level: 'weak', score: 1 };
+
+              let score = 0;
+              if (pwd.length >= 8) score += 1;
+              if (pwd.length >= 12) score += 1;
+              if (/[a-z]/.test(pwd)) score += 1;
+              if (/[A-Z]/.test(pwd)) score += 1;
+              if (/\d/.test(pwd)) score += 1;
+              if (/[^A-Za-z0-9]/.test(pwd)) score += 1;
+
+              const seq = (s: string) => {
+                const lower = s.toLowerCase();
+                const runs = ['abcdefghijklmnopqrstuvwxyz', '0123456789'];
+                for (const r of runs) {
+                  for (let i = 0; i < r.length - 3; i++) {
+                    const sub = r.slice(i, i + 4);
+                    if (lower.includes(sub)) return true;
+                  }
+                }
+                return false;
+              };
+              if (seq(pwd)) return { level: 'weak', score };
+
+              if (score >= 5) return { level: 'strong', score };
+              if (score >= 3) return { level: 'medium', score };
+              return { level: 'weak', score };
+            };
+
+            const { level, score } = getPasswordStrength(password);
+            // map score to width percentage (0..6 possible)
+            const width = Math.min(100, Math.round((score / 6) * 100));
+            const bgClass = level === 'strong' ? 'bg-emerald-500' : level === 'medium' ? 'bg-amber-500' : 'bg-rose-500';
+
+            return (
+              <div className={`mt-2 flex items-center gap-3`} aria-live="polite">
+                <div className="flex-1 h-2 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden" aria-hidden>
+                  <div
+                    className={`${bgClass} h-full rounded-full transition-all duration-150`}
+                    style={{ width: `${width}%` }}
+                  />
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-300 w-28 text-right">
+                  {level.charAt(0).toUpperCase() + level.slice(1)}
+                </div>
+              </div>
+            );
+          })()
+        )}
       </div>
       
       <div>
