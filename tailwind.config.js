@@ -7,27 +7,29 @@ export default {
     "./contexts/**/*.{js,ts,jsx,tsx}",
     "./lib/**/*.{js,ts,jsx,tsx}",
     "./services/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}", // Added pages directory
+    "./pages/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class', // or 'media'
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
         'ninja-orange': '#ff6806',
-        'ninja-gold': '#cf974b', // This is brand-ninja-gold
-        'brand-primary': '#ff6806', // Main brand color
-        'brand-secondary': '#f8f8f7', // For light backgrounds or accents
+        'ninja-gold': '#cf974b',
+        'brand-primary': '#ff6806',
+        'brand-secondary': '#f8f8f7',
         'brand-background': '#ffffff',
         'brand-text': '#1f2937', 
         'dark-background': '#111827', 
         'dark-text': '#f3f4f6', 
-
-        // New specific brand colors from prompt
         'brand-dark-gray': '#2e2d2d',
-        'brand-off-white': '#f8f8f7', // Same as brand-secondary, good
-        'brand-ninja-gold': '#cf974b', // Explicitly named
+        'brand-off-white': '#f8f8f7',
+        'brand-ninja-gold': '#cf974b',
         'brand-light-blue': '#47abd0',
         'brand-medium-gray': '#9d9fa0',
+      },
+      backgroundImage: {
+        'gradient-light': 'linear-gradient(to bottom right, #f8f8f7, #e9e9e9)',
+        'gradient-dark': 'linear-gradient(to bottom right, #111827, #2e2d2d)',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

@@ -21,7 +21,7 @@ import TermsOfServicePage from './components/pages/TermsOfServicePage';
 import usePageTitle from './components/usePageTitle'; 
 import { useAuth } from './contexts/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
-import CodingBackground from './components/CodingBackground';
+//import CodingBackground from './components/CodingBackground';
 import ThemeToggle from './components/ThemeToggle';
 import TechFactGenerator from './components/TechFactGenerator';
 import { SpeedInsights } from "@vercel/speed-insights/react";
@@ -31,7 +31,7 @@ const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => {
   usePageTitle(title); 
   return (
     <div className="container mx-auto px-4 py-8 text-center relative">
-      <CodingBackground intensity="low" style="code" className="absolute inset-0" />
+      {/*<CodingBackground intensity="low" style="code" className="absolute inset-0" />*/}
       <div className="relative z-10">
         <h1 className="text-3xl font-bold my-10">{title}</h1>
         <p>This is a placeholder page for {title}. Content to be added.</p>

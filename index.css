@@ -57,7 +57,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  
+  /* Apply the new light mode gradient */
+  @apply bg-gradient-light;
 }
+
+.dark body {
+  /* Apply the new dark mode gradient */
+  @apply bg-gradient-dark;
+}
+
 
 /* Modal optimizations */
 .modal-overlay {
