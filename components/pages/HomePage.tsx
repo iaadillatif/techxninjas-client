@@ -46,17 +46,17 @@ const HeroSection: React.FC = () => {
         className="absolute inset-0 z-0"
       />
       <div className="container mx-auto px-4 text-center relative z-10">
-        <RevealOnScroll direction="down" duration={1000}>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-orange-500 dark:text-white">
-            Welcome to TechXNinjas
-          </h1>
-        </RevealOnScroll>
-        
-        <RevealOnScroll direction="up" delay={300} duration={1000}>
-          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-200 mb-8 max-w-3xl mx-auto">
-            Your ultimate platform for hackathons, tech challenges, community interaction, and professional growth in the world of technology.
-          </p>
-        </RevealOnScroll>
+          <RevealOnScroll direction="down" duration={1000}>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-green-500 dark:text-white">
+              Welcome to TechXNinjas
+            </h1>
+          </RevealOnScroll>
+          
+          <RevealOnScroll direction="up" delay={300} duration={1000}>
+            <p className="text-lg md:text-xl text-gray-700 dark:text-gray-200 mb-8 max-w-3xl mx-auto">
+              Your ultimate platform for hackathons, tech challenges, community interaction, and professional growth in the world of technology.
+            </p>
+          </RevealOnScroll>
         
         <div className="flex flex-wrap justify-center gap-3 mb-10">
           {highlights.map((highlight, index) => (
