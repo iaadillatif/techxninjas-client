@@ -29,7 +29,7 @@ import { Analytics } from '@vercel/analytics/react';
 
 // ✅ Newly added pages
 import ResumeBuilderPage from './components/pages/ResumeBuilderPage';
-
+import FeedbackPage from './components/pages/FeedbackPage';
 
 const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => {
   usePageTitle(title); 
@@ -104,7 +104,7 @@ const App: React.FC = () => {
               
               {/* ✅ New routes added here */}
               <Route path="/resume-builder" element={<ResumeBuilderPage />} />
-              
+              <Route path="/feedback" element={<FeedbackPage />} />
               
               <Route 
                 path="/dashboard" 
