@@ -68,7 +68,7 @@ const SidebarNavItem: React.FC<{
     onMouseLeave={!isExpanded && onMouseLeave ? onMouseLeave : undefined}
     onClick={onClick}
     className={({ isActive }) =>
-      `flex items-center space-x-3 px-3 py-2.5 rounded-md transition-colors duration-200 ${
+      `flex items-center space-x-3 px-3 py-2.5 rounded-md transition-colors duration-200 mt-10 ${
         isActive
           ? 'bg-brand-primary text-white'
           : 'text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
@@ -274,7 +274,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         ref={sidebarRef}
         onMouseEnter={handleMouseEnterSidebar}
         onMouseLeave={handleMouseLeaveSidebar}
-        className={`fixed top-0 left-0 h-full bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out flex flex-col ${currentWidthClass} py-4`}
+        className={`fixed top-[64px] left-0 h-[calc(100vh-64px)] bg-white dark:bg-gray-800 shadow-lg transition-all duration-300 ease-in-out flex flex-col ${currentWidthClass} py-4`}
         style={{ 
           zIndex: 40,
           position: 'fixed'

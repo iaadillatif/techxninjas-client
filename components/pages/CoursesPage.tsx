@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Filter, X, Plus, Star, Users, Clock, Play, BookOpen, TrendingUp, Award, Globe } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
@@ -128,57 +128,116 @@ const CoursesPage: React.FC = () => {
   usePageTitle("Courses");
   const { user } = useAuth();
   
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [allCourses, setAllCourses] = useState<Course[]>([]);
   const [featuredCourses, setFeaturedCourses] = useState<Course[]>([]);
   const [categories, setCategories] = useState<CourseCategory[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [categorySearchTerm, setCategorySearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('all');
   const [showFilters, setShowFilters] = useState(false);
   const [isCreatorModalOpen, setIsCreatorModalOpen] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+
+  //  just load initial data only once
+  useEffect(() => {
+    loadInitialData();
+  },[])
 
   useEffect(() => {
-    loadData();
+    if (allCourses.length > 0) {
+      loadFilteredCourses();
+    }
   }, [selectedCategory, selectedDifficulty]);
 
-  const loadData = async () => {
+  // search with debounce
+  useEffect(() => {
+    if (searchTerm.trim()) {
+      setIsSearching(true);
+      const timeoutId = setTimeout(() => {
+        loadFilteredCourses();
+        setIsSearching(false);
+      }, 300); // Debounce for 300ms
+
+      return () => {
+        clearTimeout(timeoutId);
+        setIsSearching(false);
+      };
+    } else if(allCourses.length >0){
+      
+      setIsSearching(false);
+    }
+  }, [searchTerm,allCourses.length]);
+
+  const loadInitialData = async () => {
     try {
       setLoading(true);
       setError(null);
       
       const [coursesData, featuredData, categoriesData] = await Promise.all([
-        getCourses({ 
-          category: selectedCategory === 'all' ? undefined : selectedCategory,
-          difficulty: selectedDifficulty === 'all' ? undefined : selectedDifficulty,
-          search: searchTerm || undefined
-        }),
+        getCourses({ }),
         getFeaturedCourses(6),
         getCourseCategories()
       ]);
       
-      setCourses(coursesData);
+      setAllCourses(coursesData);
       setFeaturedCourses(featuredData);
       setCategories(categoriesData);
     } catch (err: any) {
-      console.error('Failed to load courses:', err);
+      console.error('Failed to load inital courses or data:', err);
       setError(err.message || 'Failed to load courses');
     } finally {
       setLoading(false);
     }
   };
 
+  const loadFilteredCourses = async () => {
+    try {
+      setError(null);
+      const courseData = await getCourses({
+        category: selectedCategory === 'all' ? undefined : selectedCategory,
+        difficulty: selectedDifficulty === 'all' ? undefined : selectedDifficulty,
+        search: searchTerm || undefined
+      })
+      setAllCourses(courseData)
+    } catch (err: any) {
+      console.error('Failed to load filtered courses:', err);
+      setError(err.message || 'Failed to load courses');
+    }
+  }
   const handleSearch = () => {
-    loadData();
+    loadFilteredCourses();
   };
 
   const clearFilters = () => {
     setSelectedCategory('all');
     setSelectedDifficulty('all');
     setSearchTerm('');
-    loadData();
+    setCategorySearchTerm('');
+    loadInitialData();
   };
+
+  // Filter categories based on search term (client side)
+  const filteredCategories = useMemo(() => {
+    return categories.filter(category => 
+      category.name.toLowerCase().includes(categorySearchTerm.toLowerCase())
+    )
+  },[categories,categorySearchTerm])
+
+  // Filter courses for display (client-side for immediate feedback)
+  const displayedCourses = useMemo(() => {
+    if (!searchTerm.trim()) return allCourses;
+    
+    return allCourses.filter(course =>
+      course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.short_description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      course.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      course.creator?.creator_name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [allCourses, searchTerm]);
 
   const hasActiveFilters = selectedCategory !== 'all' || selectedDifficulty !== 'all' || searchTerm !== '';
 
@@ -225,9 +284,14 @@ const CoursesPage: React.FC = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <input
                   type="text"
-                  placeholder="Search courses..."
+                  placeholder="Search courses and categories..."
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setSearchTerm(value);
+                    // update only category  search term , don't trigger course reload
+                    setCategorySearchTerm(value);
+                  }}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                   className="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent dark:bg-gray-700 dark:text-white"
                 />
@@ -315,7 +379,7 @@ const CoursesPage: React.FC = () => {
               <p className="font-semibold text-sm">Error loading courses:</p>
               <p className="text-sm">{error}</p>
               <button
-                onClick={loadData}
+                onClick={loadInitialData}
                 className="mt-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-sm"
               >
                 Try Again
@@ -327,31 +391,108 @@ const CoursesPage: React.FC = () => {
         {/* Categories Section */}
         <section className="mb-12">
           <RevealOnScroll direction="up" delay={500} duration={800}>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center">
-              <BookOpen className="w-6 h-6 text-brand-primary dark:text-brand-ninja-gold mr-2" />
-              Browse by Category
-            </h2>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-0 flex items-center">
+                <BookOpen className="w-7 h-7 text-brand-primary dark:text-brand-ninja-gold mr-3" />
+                Browse by Category
+                {isSearching && (
+                  <div className="ml-3 w-4 h-4 border-2 border-brand-primary border-t-transparent rounded-full animate-spin"></div>
+                )}
+              </h2>
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                {isSearching ? (
+                  <span className="flex items-center gap-2">
+                    <div className="w-3 h-3 bg-brand-primary rounded-full animate-pulse"></div>
+                    Filtering...
+                  </span>
+                ) : (
+                  `${filteredCategories.length} categories available`
+                )}
+              </div>
+            </div>
           </RevealOnScroll>
           
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {categories.slice(0, 10).map((category, index) => (
-              <RevealOnScroll key={category.id} direction="up" delay={600 + index * 100} duration={800}>
+          <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 lg:gap-6 transition-opacity duration-300 ${isSearching ? 'opacity-70' : 'opacity-100'}`}>
+            {filteredCategories.slice(0, 16).map((category, index) => (
+              <RevealOnScroll key={category.id} direction="up" delay={600 + index * 50} duration={800}>
                 <button
                   onClick={() => setSelectedCategory(category.slug)}
-                  className={`p-4 rounded-lg border-2 transition-all duration-300 text-center hover:shadow-lg ${
+                  className={`group relative w-full aspect-square p-4 rounded-2xl border transition-all duration-500 text-center backdrop-blur-sm overflow-hidden ${
                     selectedCategory === category.slug
-                      ? 'border-brand-primary bg-brand-primary bg-opacity-10 dark:bg-brand-ninja-gold dark:bg-opacity-10'
-                      : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-brand-primary'
+                      ? 'border-brand-primary bg-gradient-to-br from-brand-primary/15 to-brand-primary/5 dark:from-brand-ninja-gold/15 dark:to-brand-ninja-gold/5 shadow-xl shadow-brand-primary/20 dark:shadow-brand-ninja-gold/20 transform scale-105 -translate-y-2'
+                      : 'border-gray-200/60 dark:border-gray-700/60 bg-white/70 dark:bg-gray-800/70 hover:border-brand-primary/50 hover:bg-white/90 dark:hover:bg-gray-800/90 hover:shadow-lg hover:shadow-gray-400/20 dark:hover:shadow-gray-900/40 hover:scale-105 hover:-translate-y-1'
                   }`}
                 >
-                  <div className="text-2xl mb-2">{category.icon}</div>
-                  <h3 className="text-sm font-medium text-gray-900 dark:text-white line-clamp-2">
-                    {category.name}
-                  </h3>
+                  {/* Background pattern */}
+                  <div className="absolute inset-0 opacity-5">
+                    <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-current"></div>
+                    <div className="absolute bottom-2 left-2 w-4 h-4 rounded-full bg-current"></div>
+                  </div>
+                  
+                  {/* Content container */}
+                  <div className="relative z-10 h-full flex flex-col items-center justify-center gap-2">
+                    {/* Icon */}
+                    <div className={`text-4xl md:text-5xl transition-all duration-300 ${
+                      selectedCategory === category.slug 
+                        ? 'scale-110 filter drop-shadow-lg' 
+                        : 'group-hover:scale-110 group-hover:filter group-hover:drop-shadow-lg'
+                    }`}>
+                      {category.icon}
+                    </div>
+                    
+                    {/* Category name */}
+                    <h3 className={`text-xs sm:text-sm md:text-base font-semibold text-center leading-tight transition-all duration-300 px-1 ${
+                      selectedCategory === category.slug
+                        ? 'text-brand-primary dark:text-brand-ninja-gold'
+                        : 'text-gray-800 dark:text-gray-200 group-hover:text-brand-primary dark:group-hover:text-brand-ninja-gold'
+                    }`}>
+                      <span className="line-clamp-2 break-words">
+                        {category.name}
+                      </span>
+                    </h3>
+                  </div>
+
+                  {/* Selected indicator */}
+                  {selectedCategory === category.slug && (
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-brand-primary dark:bg-brand-ninja-gold rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                  )}
+
+                  {/* Hover gradient overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-br from-brand-primary/8 via-transparent to-brand-primary/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl ${
+                    selectedCategory === category.slug ? 'opacity-100' : ''
+                  }`}></div>
+                  
+                  {/* Shine effect on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"></div>
                 </button>
               </RevealOnScroll>
             ))}
           </div>
+          
+          {filteredCategories.length === 0 && categorySearchTerm && (
+            <RevealOnScroll direction="up" delay={600} duration={800}>
+              <div className="text-center py-12 px-6 bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-gray-800/80 dark:to-gray-900/80 rounded-3xl backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50">
+                <div className="text-6xl mb-4 opacity-50">🔍</div>
+                <h3 className="text-xl font-bold text-gray-700 dark:text-gray-300 mb-3">
+                  No categories found
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
+                  We couldn't find any categories matching <span className="font-semibold text-brand-primary dark:text-brand-ninja-gold">"{categorySearchTerm}"</span>. Try searching with different keywords.
+                </p>
+                <button 
+                  onClick={() => {
+                    setSearchTerm('');
+                    setCategorySearchTerm('');
+                  }}
+                  className="mt-4 px-6 py-2 bg-brand-primary hover:bg-brand-ninja-gold text-white rounded-full transition-colors duration-300 text-sm font-medium"
+                >
+                  Clear search
+                </button>
+              </div>
+            </RevealOnScroll>
+          )}
         </section>
 
         {featuredCourses.length > 0 && !searchTerm && (
@@ -382,17 +523,17 @@ const CoursesPage: React.FC = () => {
                   {searchTerm ? 'Search Results' : selectedCategory === 'all' ? 'All Courses' : `${categories.find(c => c.slug === selectedCategory)?.name} Courses`}
                 </h2>
               </div>
-              {courses.length > 0 && (
+              {displayedCourses.length > 0 && (
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {courses.length} course{courses.length !== 1 ? 's' : ''}
+                  {displayedCourses.length} course{displayedCourses.length !== 1 ? 's' : ''}
                 </span>
               )}
             </div>
           </RevealOnScroll>
 
-          {courses.length > 0 ? (
+          {displayedCourses.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {courses.map((course, index) => (
+              {displayedCourses.map((course, index) => (
                 <RevealOnScroll key={course.id} direction="up" delay={1000 + index * 100} duration={800}>
                   <CourseCard course={course} />
                 </RevealOnScroll>
