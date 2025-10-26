@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Search, X } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import { BRAND_NAME } from '../../constants';
+import ThemeToggle from '../ThemeToggle'; 
 
 interface SearchResult {
   id: string;
@@ -335,6 +336,7 @@ const SearchHeader: React.FC = () => {
                   />
                 </div>
               </Link>
+              <ThemeToggle />
             </div>
           </div>
         </div>

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Theme, User } from '../../types';
 import { BRAND_NAME } from '../../constants';
+import Notifications from '../pages/Notifications';
+
 import {
   BellIcon,
   UserCircleIcon,
@@ -304,20 +306,42 @@ const Sidebar: React.FC<SidebarProps> = ({
           })}
         </nav>
 
-        <div className={`mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 ${isEffectivelyOpen ? 'px-4' : 'px-2'}`}>
+        {/* <div className={`mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 ${isEffectivelyOpen ? 'px-4' : 'px-2'}`}>
           <div className={`flex ${isEffectivelyOpen ? 'justify-between items-center' : 'flex-col space-y-3 items-center'} mb-3 w-full`}>
             <ThemeToggle />
             <button 
                 className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
+                
                 aria-label="Notifications"
             >
+              <Link to = "/notifications">
               <BellIcon className="w-5 h-5 lucide" />
               {isEffectivelyOpen && <span className="sr-only">Notifications</span>}
+              </Link>
             </button>
           </div>
           <div className={`${isEffectivelyOpen ? '' : 'flex flex-col items-center'}`}>
             {authControls(!isEffectivelyOpen)}
           </div>
+        </div> */}
+
+
+        <div className={`mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 ${isEffectivelyOpen ? 'px-4' : 'px-2'}`}>
+            <div className={`flex ${isEffectivelyOpen ? 'justify-between items-center' : 'flex-col space-y-3 items-center'} mb-3 w-full`}>
+                <ThemeToggle />
+                <Link
+                    to="/notifications" // Specify the target path directly here
+                    className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
+                    aria-label="Notifications"
+                    // The onClick handler is removed as Link handles navigation
+                >
+                    <BellIcon className="w-5 h-5 lucide" />
+                    {isEffectivelyOpen && <span className="sr-only">Notifications</span>}
+                </Link>
+            </div>
+            <div className={`${isEffectivelyOpen ? '' : 'flex flex-col items-center'}`}>
+                {authControls(!isEffectivelyOpen)}
+            </div>
         </div>
         
         <button
