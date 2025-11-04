@@ -19,13 +19,15 @@ import {
   AlertCircle,
   MessageCircle,
   ThumbsUp,
-  User
+  User,
+  Globe
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { getCourseBySlug, enrollInCourse } from '../../services/courseService';
 import { Course } from '../../types';
 import usePageTitle from '../usePageTitle';
 import LazyImage from '../LazyImage';
+import ShareButtons from '../ShareButtons';
 
 const CourseDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -565,31 +567,12 @@ const CourseDetailPage: React.FC = () => {
 
                   <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                     <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Share this course</h3>
-                    <div className="flex justify-center space-x-3">
-                      <button 
-                        onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(course.title)}&url=${encodeURIComponent(window.location.href)}`, '_blank')}
-                        className="p-2 text-gray-400 hover:text-blue-500 transition-colors"
-                      >
-                        <Twitter className="w-5 h-5" />
-                      </button>
-                      <button 
-                        onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank')}
-                        className="p-2 text-gray-400 hover:text-blue-700 transition-colors"
-                      >
-                        <Linkedin className="w-5 h-5" />
-                      </button>
-                      <button 
-                        onClick={shareCourse}
-                        className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
-                      >
-                        <Share2 className="w-5 h-5" />
-                      </button>
-                      <button 
-                        onClick={copyLink}
-                        className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
-                      >
-                        <Copy className="w-5 h-5" />
-                      </button>
+                    <div className="flex justify-center">
+                      <ShareButtons 
+                        url={window.location.href}
+                        title={course.title}
+                        description={course.short_description || course.description}
+                      />
                     </div>
                   </div>
                 </div>

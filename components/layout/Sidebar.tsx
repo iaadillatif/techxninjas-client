@@ -15,7 +15,8 @@ import {
   PanelRightOpen as PanelRightOpenIcon,
   Settings as SettingsIcon, 
   GraduationCap as GraduationCapIcon, 
-  Youtube as YoutubeIcon
+  Youtube as YoutubeIcon,
+  Trophy as TrophyIcon
 } from 'lucide-react';
 import ThemeToggle from '../ThemeToggle'; 
 
@@ -29,8 +30,9 @@ const navLinks: NavLinkItem[] = [
   { to: '/', label: 'Home', icon: HomeIcon },
   { to: '/events', label: 'Events', icon: CalendarDaysIcon },
   { to: '/courses', label: 'Courses', icon: GraduationCapIcon },
-  { to: '/giveaways', label: 'Giveaways', icon: GiftIcon },
   { to: '/articles', label: 'Articles', icon: FileTextIcon },
+  { to: '/leaderboard', label: 'Leaderboard', icon: TrophyIcon },
+  { to: '/giveaways', label: 'Giveaways', icon: GiftIcon },
 ];
 
 const COLLAPSED_WIDTH = "80px"; 

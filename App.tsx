@@ -12,12 +12,14 @@ import ArticlesPage from './components/pages/ArticlesPage';
 import ArticleDetailPage from './components/pages/ArticleDetailPage';
 import CoursesPage from './components/pages/CoursesPage';
 import CourseDetailPage from './components/pages/CourseDetailPage';
+import LeaderboardPage from './components/pages/LeaderboardPage';
 import CreatorDashboardPage from './components/pages/CreatorDashboardPage';
 import UserProfilePage from './components/pages/UserProfilePage';
 import PublicProfilePage from './components/pages/PublicProfilePage';
 import ContactUsPage from './components/pages/ContactUsPage';
 import PrivacyPolicyPage from './components/pages/PrivacyPolicyPage';
 import TermsOfServicePage from './components/pages/TermsOfServicePage';
+import DatabaseTestPage from './components/pages/DatabaseTestPage';
 import usePageTitle from './components/usePageTitle'; 
 import { useAuth } from './contexts/AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -94,9 +96,11 @@ const App: React.FC = () => {
               <Route path="/articles/:slug" element={<ArticleDetailPage />} />
               <Route path="/courses" element={<CoursesPage />} />
               <Route path="/courses/:slug" element={<CourseDetailPage />} />
+              <Route path="/leaderboard" element={<LeaderboardPage />} />
               <Route path="/giveaways" element={<PlaceholderPage title="Giveaways" />} />
               <Route path="/contact-us" element={<ContactUsPage />} />
               <Route path="/about-us" element={<PlaceholderPage title="About Us" />} />
+              <Route path="/db-test" element={<DatabaseTestPage />} />
               <Route 
                 path="/dashboard" 
                 element={

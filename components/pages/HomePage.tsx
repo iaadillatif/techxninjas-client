@@ -24,6 +24,7 @@ import RevealOnScroll from '../RevealOnScroll';
 import AnimatedCounter from '../AnimatedCounter';
 import TestimonialsSlider from '../TestimonialsSlider';
 import MentorsSlider from '../MentorsSlider';
+import Leaderboard from '../Leaderboard';
 import { getTestimonials, getHomepageMentors } from '../../services/homeService';
 import { Testimonial, HomepageMentor } from '../../types';
 
@@ -363,6 +364,32 @@ const MentorsSection: React.FC = () => {
   );
 };
 
+const LeaderboardSection: React.FC = () => {
+  return (
+    <section className="relative py-16 bg-white dark:bg-gray-800 overflow-hidden">
+      <CodingBackground 
+        intensity="low" 
+        style="binary"
+        className="absolute inset-0 z-0"
+      />
+      <div className="container mx-auto px-4 relative z-10">
+        <RevealOnScroll direction="up" duration={800}>
+          <h2 className="text-3xl font-bold text-center mb-4 text-brand-dark-gray dark:text-white">
+            Top Contributors
+          </h2>
+          <p className="text-lg text-center text-gray-600 dark:text-gray-400 mb-12">
+            Recognizing our most active and engaged community members
+          </p>
+        </RevealOnScroll>
+        
+        <RevealOnScroll direction="up" delay={300} duration={800}>
+          <Leaderboard />
+        </RevealOnScroll>
+      </div>
+    </section>
+  );
+};
+
 const ExploreFeaturesSection: React.FC = () => {
   const features = [
     { name: 'Resume Builder', icon: FileText, dev: true },
@@ -449,6 +476,7 @@ export const HomePage: React.FC = () => {
       <WhyTechXNinjasSection />
       <TestimonialsSection />
       <MentorsSection />
+      <LeaderboardSection />
       <ExploreFeaturesSection />
     </div>
   );
