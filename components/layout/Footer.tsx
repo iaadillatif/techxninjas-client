@@ -37,11 +37,11 @@ const Footer: React.FC<FooterProps> = ({ layoutStyle }) => {
       color: "hover:text-blue-700",
     },
     {
-      href: "https://www.instagram.com/cipherschools",
+      href: "https://www.instagram.com/instagram",
       icon: InstagramIcon,
       label: "Instagram",
       color: "hover:text-pink-600",
-    }, // Note: Instagram link is to cipherschools as per prompt
+    },
     {
       href: "https://t.me/thetechxninjas",
       icon: TelegramIcon,
