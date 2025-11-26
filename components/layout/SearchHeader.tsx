@@ -5,6 +5,7 @@ import { Search, X } from 'lucide-react';
 import { UserCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import { BRAND_NAME } from '../../constants';
+import ThemeToggle from '../ThemeToggle'; 
 
 interface SearchResult {
   id: string;
@@ -339,6 +340,8 @@ const SearchHeader: React.FC = () => {
                     </div>
                   ) : null}
                 </div>
+              </Link>
+              <ThemeToggle />
               )}
             </div>
           </div>
