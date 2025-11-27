@@ -203,3 +203,25 @@ export const PhoneIcon: React.FC<IconProps> = ({ className }) => (
     <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.308 1.154a11.034 11.034 0 005.516 5.516l1.154-2.308a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
   </svg>
 );
+
+// ------------------------------------------------------------------
+// ⭐ ADD THE XIcon HERE TO FIX THE MODULE EXPORT ERROR ⭐
+// ------------------------------------------------------------------
+
+export const XIcon: React.FC<IconProps> = ({ className }) => (
+  <svg 
+    className={className} 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round"
+  >
+    {/* Line from top-left to bottom-right */}
+    <path d="M18 6L6 18" /> 
+    {/* Line from top-right to bottom-left */}
+    <path d="M6 6L18 18" /> 
+  </svg>
+);
