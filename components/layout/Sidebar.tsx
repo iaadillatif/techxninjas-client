@@ -18,6 +18,7 @@ import {
   Youtube as YoutubeIcon
 } from 'lucide-react';
 import ThemeToggle from '../ThemeToggle'; 
+import NotificationPanel from '../NotificationPanel';
 
 type NavLinkItem = {
   to: string;
@@ -90,6 +91,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   const [sidebarState, setSidebarState] = useState<SidebarState>('collapsed');
   const [activeTooltip, setActiveTooltip] = useState<{ text: string; top: number; left: number } | null>(null);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  // Helper to get userId for notifications
+  const userId = user?.id || '';
+
   const sidebarRef = useRef<HTMLElement>(null);
 
   const isEffectivelyOpen = sidebarState === 'hover-expanded' || sidebarState === 'pinned-expanded';
@@ -307,13 +312,31 @@ const Sidebar: React.FC<SidebarProps> = ({
         <div className={`mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 ${isEffectivelyOpen ? 'px-4' : 'px-2'}`}>
           <div className={`flex ${isEffectivelyOpen ? 'justify-between items-center' : 'flex-col space-y-3 items-center'} mb-3 w-full`}>
             <ThemeToggle />
-            <button 
-                className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
-                aria-label="Notifications"
-            >
-              <BellIcon className="w-5 h-5 lucide" />
-              {isEffectivelyOpen && <span className="sr-only">Notifications</span>}
-            </button>
+            <div className="relative">
+              <button 
+                  className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
+                  aria-label="Notifications"
+                  onClick={() => setIsNotificationOpen((open) => !open)}
+              >
+                <BellIcon className="w-5 h-5 lucide" />
+                {isEffectivelyOpen && <span className="sr-only">Notifications</span>}
+              </button>
+              {isNotificationOpen && (
+                <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-80 max-w-[90vw] bg-white dark:bg-gray-800 shadow-lg rounded-lg z-50 border border-gray-200 dark:border-gray-700" style={{minHeight:'120px'}}>
+                  {userId ? (
+                    <NotificationPanel userId={userId} onClose={() => setIsNotificationOpen(false)} />
+                  ) : (
+                    <>
+                      <div className="flex justify-between items-center px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                        <span className="font-semibold">Notifications</span>
+                        <button onClick={() => setIsNotificationOpen(false)} className="text-gray-500 hover:text-gray-800 dark:hover:text-white">&times;</button>
+                      </div>
+                      <div className="p-4 text-center text-gray-500">Please log in to view notifications.</div>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
           <div className={`${isEffectivelyOpen ? '' : 'flex flex-col items-center'}`}>
             {authControls(!isEffectivelyOpen)}
