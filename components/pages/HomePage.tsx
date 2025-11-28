@@ -29,11 +29,11 @@ import { Testimonial, HomepageMentor } from '../../types';
 
 const HeroSection: React.FC = () => {
   const highlights = [
-    { text: 'Build Projects', icon: Briefcase },
-    { text: 'Free Certificates', icon: Award },
-    { text: 'No Signup Barrier', icon: Zap },
-    { text: 'Personalized Paths', icon: Lightbulb },
-    { text: 'Industry-level Mentorship', icon: Users },
+    { text: 'Build Projects', icon: Briefcase, to: '/projects' },
+    { text: 'Free Certificates', icon: Award, to: '/certificates' },
+    { text: 'No Signup Barrier', icon: Zap, to: '/no-signup' },
+    { text: 'Personalized Paths', icon: Lightbulb, to: '/learning-paths' },
+    { text: 'Industry-level Mentorship', icon: Users, to: '/mentorship' },
   ];
 
   return (
@@ -61,10 +61,13 @@ const HeroSection: React.FC = () => {
         <div className="flex flex-wrap justify-center gap-3 mb-10">
           {highlights.map((highlight, index) => (
             <RevealOnScroll key={index} direction="up" delay={400 + index * 100} duration={800}>
-              <div className="flex items-center bg-white/70 dark:bg-white/20 backdrop-blur-sm text-gray-800 dark:text-white rounded-full shadow-md text-xs md:text-sm py-1 md:py-2 px-3 md:px-4">
-  <highlight.icon className="w-5 h-5 mr-2 text-brand-primary" />
-  {highlight.text}
-</div>
+              <Link
+                to={highlight.to}
+                className="flex items-center bg-white/70 dark:bg-white/20 backdrop-blur-sm text-gray-800 dark:text-white rounded-full shadow-md text-xs md:text-sm py-1 md:py-2 px-3 md:px-4 hover:bg-white/90 dark:hover:bg-white/30 transition-colors"
+              >
+                <highlight.icon className="w-5 h-5 mr-2 text-brand-primary" />
+                {highlight.text}
+              </Link>
 
             </RevealOnScroll>
           ))}
