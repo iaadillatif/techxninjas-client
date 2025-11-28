@@ -48,6 +48,7 @@ import { getEventBySlug, getSimilarEvents, getEventStages, getEventFAQs } from '
 import { TechEvent, EventMode, EventStatus, EventStage, EventFAQ, EventBenefit } from '../../types';
 import usePageTitle from '../usePageTitle';
 import ReviewSection from '../ReviewSection';
+import ShareButtons from '../ShareButtons';
 
 const EventDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -921,32 +922,12 @@ const EventDetailPage: React.FC = () => {
                 </div>
 
                 <div className="border-t border-gray-200 dark:border-gray-700 pt-3 sm:pt-4">
-                  <div className="flex justify-center space-x-2 sm:space-x-3">
-                    <button 
-                      onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(event.title)}&url=${encodeURIComponent(window.location.href)}`, '_blank')}
-                      className="p-1.5 sm:p-2 text-gray-400 hover:text-blue-500 transition-colors"
-                    >
-                      <Twitter className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </button>
-                    <button 
-                      onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(event.title + ' ' + window.location.href)}`, '_blank')}
-                      className="p-1.5 sm:p-2 text-gray-400 hover:text-green-500 transition-colors"
-                    >
-                      <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </button>
-                    <button 
-                      onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank')}
-                      className="p-1.5 sm:p-2 text-gray-400 hover:text-blue-700 transition-colors"
-                    >
-                      <Linkedin className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </button>
-                    <button 
-                      onClick={copyLink}
-                      className="p-1.5 sm:p-2 text-gray-400 hover:text-gray-600 transition-colors"
-                    >
-                      <Copy className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </button>
-                  </div>
+                  <ShareButtons 
+                    url={window.location.href}
+                    title={event.title}
+                    description={event.description}
+                    orientation="horizontal"
+                  />
                 </div>
               </div>
 

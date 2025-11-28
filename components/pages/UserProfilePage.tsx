@@ -8,6 +8,9 @@ import { Edit3, Save, X, Plus, Trash2, AlertTriangle, Info, UserCircle, Briefcas
 import AddSectionModal from '../AddSectionModal';
 import EditProfileModal from '../EditProfileModal';
 import CodingBackground from '../CodingBackground';
+import GamificationBadge from '../GamificationBadge';
+import { getUserGamification, getUserBadges } from '../../services/gamificationService';
+import { UserGamification, UserBadge } from '../../types';
 
 const sectionIconProps = "w-5 h-5 mr-2 text-brand-primary dark:text-brand-ninja-gold";
 
@@ -70,6 +73,8 @@ const UserProfilePage: React.FC = () => {
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const [hasTriedLoading, setHasTriedLoading] = useState(false);
   const [shareTooltip, setShareTooltip] = useState(false);
+  const [gamificationData, setGamificationData] = useState<UserGamification | null>(null);
+  const [userBadges, setUserBadges] = useState<UserBadge[]>([]);
 
   const loadProfile = useCallback(async () => {
     if (!user) return;
@@ -88,6 +93,18 @@ const UserProfilePage: React.FC = () => {
       }
       setProfile(userProfile);
       localStorage.setItem("userProfile", JSON.stringify(userProfile)); // Save to localStorage
+
+      // Load gamification data
+      try {
+        const gamification = await getUserGamification(user.id);
+        setGamificationData(gamification);
+        
+        const badges = await getUserBadges(user.id);
+        setUserBadges(badges);
+      } catch (err) {
+        console.error("Failed to load gamification data:", err);
+        // Continue even if gamification fails
+      }
     } catch (err: any) {
       console.error("Failed to load profile:", err);
       setError(err.message || "Could not load profile.");
@@ -304,6 +321,57 @@ const UserProfilePage: React.FC = () => {
             </div>
           </div>
         </div>
+        
+        {/* Gamification Stats Card */}
+        {gamificationData && (
+          <div className="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden mb-8 border border-gray-200 dark:border-gray-700 p-6">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+              <Trophy className="w-6 h-6 mr-2 text-brand-primary" />
+              Your Achievements
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              {/* XP Card */}
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-lg p-4 text-center">
+                <div className="text-blue-600 dark:text-blue-300 text-sm font-medium mb-1">Total XP</div>
+                <div className="text-3xl font-bold text-blue-700 dark:text-blue-200">{gamificationData.total_xp.toLocaleString()}</div>
+              </div>
+              
+              {/* Level Card */}
+              <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 rounded-lg p-4 text-center">
+                <div className="text-purple-600 dark:text-purple-300 text-sm font-medium mb-1">Level</div>
+                <div className="text-3xl font-bold text-purple-700 dark:text-purple-200">{gamificationData.level}</div>
+              </div>
+              
+              {/* Streak Card */}
+              <div className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 rounded-lg p-4 text-center">
+                <div className="text-orange-600 dark:text-orange-300 text-sm font-medium mb-1">Current Streak</div>
+                <div className="text-3xl font-bold text-orange-700 dark:text-orange-200">{gamificationData.current_streak} 🔥</div>
+              </div>
+            </div>
+
+            {/* Badges Section */}
+            {userBadges.length > 0 && (
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Earned Badges ({userBadges.length})</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                  {userBadges.map((userBadge) => (
+                    <div key={userBadge.id} className="flex flex-col items-center">
+                      <GamificationBadge 
+                        badge={userBadge.badge} 
+                        size="lg"
+                        earned={true}
+                      />
+                      <p className="text-xs text-center text-gray-600 dark:text-gray-400 mt-2">
+                        {new Date(userBadge.earned_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
         
         {error && (
           <div className="mb-6 p-4 bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-200 rounded-md">

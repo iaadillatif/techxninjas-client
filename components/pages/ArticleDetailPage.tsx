@@ -34,6 +34,10 @@ import {
 import { Article, ArticleComment } from '../../types';
 import { useAuth } from '../../contexts/AuthContext';
 import usePageTitle from '../usePageTitle';
+import ShareButtons from '../ShareButtons';
+import ReadingTime from '../ReadingTime';
+import TableOfContents from '../TableOfContents';
+import Newsletter from '../Newsletter';
 
 const ArticleDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -363,10 +367,7 @@ const ArticleDetailPage: React.FC = () => {
                       <Calendar className="w-4 h-4" />
                       <span>{formatDate(article.published_at || article.created_at)}</span>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <Clock className="w-4 h-4" />
-                      <span>{article.read_time} min read</span>
-                    </div>
+                    <ReadingTime content={article.content} />
                   </div>
                 </div>
               </div>
@@ -400,6 +401,11 @@ const ArticleDetailPage: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             <div className="lg:col-span-3">
+              {/* Table of Contents */}
+              <div className="mb-8">
+                <TableOfContents content={article.content} />
+              </div>
+
               <div className="prose prose-lg dark:prose-invert max-w-none mb-8">
                 <div dangerouslySetInnerHTML={{ __html: article.content }} />
               </div>
@@ -439,35 +445,16 @@ const ArticleDetailPage: React.FC = () => {
                   )}
                 </div>
 
-                <div className="flex items-center space-x-3">
-                  <button 
-                    onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(window.location.href)}`, '_blank')}
-                    className="p-2 text-gray-400 hover:text-blue-500 transition-colors"
-                  >
-                    <Twitter className="w-5 h-5" />
-                  </button>
-                  <button 
-                    onClick={() => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank')}
-                    className="p-2 text-gray-400 hover:text-blue-700 transition-colors"
-                  >
-                    <Linkedin className="w-5 h-5" />
-                  </button>
-                  <button 
-                    onClick={shareArticle}
-                    className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
-                  >
-                    <Share2 className="w-5 h-5" />
-                  </button>
-                  <button 
-                    onClick={() => {
-                      navigator.clipboard.writeText(window.location.href);
-                      alert('Link copied!');
-                    }}
-                    className="p-2 text-gray-400 hover:text-gray-600 transition-colors"
-                  >
-                    <Copy className="w-5 h-5" />
-                  </button>
-                </div>
+                <ShareButtons 
+                  url={window.location.href}
+                  title={article.title}
+                  description={article.excerpt}
+                />
+              </div>
+
+              {/* Newsletter Subscription */}
+              <div className="mb-8">
+                <Newsletter variant="inline" />
               </div>
 
               <section className="mb-8">

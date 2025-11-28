@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BRAND_NAME, WHATSAPP_COMMUNITY_LINK } from "../../constants";
+import Newsletter from "../Newsletter";
 import {
   WhatsAppIcon,
   YoutubeIcon,
@@ -9,7 +10,7 @@ import {
   TelegramIcon,
   MailIcon,
   PhoneIcon,
-} from "../icons"; // Assuming MailIcon and PhoneIcon exist or will be added
+} from "../icons";
 
 interface FooterProps {
   layoutStyle?: React.CSSProperties;
@@ -56,6 +57,11 @@ const Footer: React.FC<FooterProps> = ({ layoutStyle }) => {
       style={layoutStyle}
     >
       <div className="container mx-auto px-4">
+        {/* Newsletter Section */}
+        <div className="mb-12">
+          <Newsletter variant="footer" />
+        </div>
+
         <div className="flex flex-wrap justify-center sm:justify-between gap-8 mb-10 text-sm text-gray-600 dark:text-gray-300">
           {/* Column 1: TechXNinjas */}
           <div className="w-[200px] flex-shrink-0 text-center sm:text-left">

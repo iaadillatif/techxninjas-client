@@ -552,3 +552,198 @@ export interface HomepageMentor {
   created_at: string;
   updated_at: string;
 }
+
+// Gamification System Types
+export enum BadgeType {
+  FIRST_LOGIN = 'first_login',
+  FIRST_EVENT = 'first_event',
+  FIRST_COURSE = 'first_course',
+  FIRST_ARTICLE = 'first_article',
+  COMPLETE_5_COURSES = 'complete_5_courses',
+  COMPLETE_10_COURSES = 'complete_10_courses',
+  WRITE_FIRST_ARTICLE = 'write_first_article',
+  WRITE_10_ARTICLES = 'write_10_articles',
+  TOP_CONTRIBUTOR = 'top_contributor',
+  STREAK_7_DAYS = 'streak_7_days',
+  STREAK_30_DAYS = 'streak_30_days',
+  STREAK_100_DAYS = 'streak_100_days',
+  PROFILE_COMPLETE = 'profile_complete',
+  SHARE_CONTENT = 'share_content',
+  HELPFUL_REVIEWER = 'helpful_reviewer',
+  EVENT_ORGANIZER = 'event_organizer',
+  MENTOR = 'mentor',
+  EARLY_ADOPTER = 'early_adopter',
+}
+
+export enum UserLevel {
+  NEWBIE = 'Newbie',
+  BEGINNER = 'Beginner',
+  INTERMEDIATE = 'Intermediate',
+  ADVANCED = 'Advanced',
+  EXPERT = 'Expert',
+  MASTER = 'Master',
+  LEGEND = 'Legend',
+}
+
+export interface Badge {
+  id: string;
+  type: BadgeType;
+  name: string;
+  description: string;
+  icon: string;
+  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+  xp_reward: number;
+  created_at: string;
+}
+
+export interface UserBadge {
+  id: string;
+  user_id: string;
+  badge_id: string;
+  earned_at: string;
+  badge?: Badge;
+}
+
+export interface UserGamification {
+  id: string;
+  user_id: string;
+  total_xp: number;
+  level: UserLevel;
+  current_streak: number;
+  longest_streak: number;
+  last_activity_date: string;
+  courses_completed: number;
+  articles_read: number;
+  events_attended: number;
+  articles_written: number;
+  helpful_reviews: number;
+  shares_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface LeaderboardEntry {
+  user_id: string;
+  username: string;
+  avatar_url?: string;
+  total_xp: number;
+  level: UserLevel;
+  badges_count: number;
+  rank: number;
+}
+
+export interface Achievement {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  progress: number;
+  total: number;
+  completed: boolean;
+  badge?: Badge;
+}
+
+// Notification System Types
+export enum NotificationType {
+  EVENT_REMINDER = 'event_reminder',
+  COURSE_UPDATE = 'course_update',
+  NEW_ARTICLE = 'new_article',
+  COMMENT_REPLY = 'comment_reply',
+  BADGE_EARNED = 'badge_earned',
+  LEVEL_UP = 'level_up',
+  MENTION = 'mention',
+  FOLLOW = 'follow',
+  MESSAGE = 'message',
+  SYSTEM = 'system',
+}
+
+export interface Notification {
+  id: string;
+  user_id: string;
+  type: NotificationType;
+  title: string;
+  message: string;
+  link?: string;
+  read: boolean;
+  created_at: string;
+  data?: any;
+}
+
+// Bookmark System Types
+export enum BookmarkType {
+  ARTICLE = 'article',
+  COURSE = 'course',
+  EVENT = 'event',
+}
+
+export interface Bookmark {
+  id: string;
+  user_id: string;
+  item_id: string;
+  item_type: BookmarkType;
+  collection_id?: string;
+  created_at: string;
+  // Populated data
+  item?: Article | Course | TechEvent;
+}
+
+export interface Collection {
+  id: string;
+  user_id: string;
+  name: string;
+  description?: string;
+  is_public: boolean;
+  bookmarks_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+// Social Features Types
+export interface UserFollow {
+  id: string;
+  follower_id: string;
+  following_id: string;
+  created_at: string;
+}
+
+export interface Message {
+  id: string;
+  sender_id: string;
+  receiver_id: string;
+  content: string;
+  read: boolean;
+  created_at: string;
+  sender?: {
+    username: string;
+    avatar_url?: string;
+  };
+}
+
+export interface ActivityFeedItem {
+  id: string;
+  user_id: string;
+  activity_type: 'course_enrolled' | 'article_published' | 'event_registered' | 'badge_earned' | 'level_up';
+  title: string;
+  description: string;
+  link?: string;
+  created_at: string;
+  user?: {
+    username: string;
+    avatar_url?: string;
+  };
+}
+
+// Newsletter Types
+export interface NewsletterSubscriber {
+  id: string;
+  email: string;
+  subscribed_at: string;
+  is_active: boolean;
+  source: string;
+  preferences?: {
+    events: boolean;
+    articles: boolean;
+    courses: boolean;
+    weekly_digest: boolean;
+  };
+}
