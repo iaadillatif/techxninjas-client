@@ -452,12 +452,14 @@ const CoursesPage: React.FC = () => {
                     </h3>
                   </div>
 
-                  {/* Selected indicator */}
-                  {selectedCategory === category.slug && (
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-brand-primary dark:bg-brand-ninja-gold rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                    {/* Selected indicator */}
+                    {selectedCategory === category.slug && (
+                    <div className="absolute top-1 right-1 md:top-2 md:right-2 w-5 h-5 md:w-6 md:h-6 bg-brand-primary dark:bg-brand-ninja-gold rounded-full flex items-center justify-center shadow-lg animate-pulse z-10">
                       <div className="w-2 h-2 bg-white rounded-full"></div>
                     </div>
                   )}
+
+
 
                   {/* Hover gradient overlay */}
                   <div className={`absolute inset-0 bg-gradient-to-br from-brand-primary/8 via-transparent to-brand-primary/4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl ${
