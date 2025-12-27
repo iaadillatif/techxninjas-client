@@ -22,6 +22,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, onSuccess 
   const auth = useContext(AuthContext) as AuthContextType;
   const [formError, setFormError] = useState<string | null>(null);
 
+  const preventCopyPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError(null);
@@ -70,7 +74,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, onSuccess 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-       <div>
+        <div>
         <button
           type="button"
           onClick={handleGoogleSignIn}
@@ -141,6 +145,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, onSuccess 
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onPaste={preventCopyPaste}
+          onCut={preventCopyPaste}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm dark:bg-gray-700 dark:text-white"
         />
       </div>
@@ -157,6 +163,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitchToLogin, onSuccess 
           required
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          onPaste={preventCopyPaste}
+          onCut={preventCopyPaste}
           className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm dark:bg-gray-700 dark:text-white"
         />
       </div>
