@@ -11,6 +11,7 @@ import OptimizedArticleCard from '../OptimizedArticleCard';
 import useDebounce from '../../hooks/useDebounce';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { memoize } from '../../utils/performance';
+import SearchButton from '../searchButton';
 
 type TabType = 'hackathons' | 'community' | 'articles';
 
@@ -205,18 +206,19 @@ const OptimizedEventsPage: React.FC = () => {
             </div>
 
             <div className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                  <input
-                    type="text"
-                    placeholder={`Search ${activeTab === 'articles' ? 'articles' : 'events'}...`}
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-9 pr-4 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent dark:bg-gray-700 dark:text-white"
-                  />
-                </div>
-
+              <div className="flex items-center gap-2 w-full">
+                <div className="relative flex-1">
+                  <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <input
+                      type="text"
+                      placeholder={`Search ${activeTab === 'articles' ? 'articles' : 'events'}...`}
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="w-full pl-8 pr-2 py-2.5 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent dark:bg-gray-700 dark:text-white"
+                    />
+                  </div>
+                  <SearchButton />
+                
                 {activeTab !== 'articles' && (
                   <button
                     onClick={() => setShowFilters(!showFilters)}
