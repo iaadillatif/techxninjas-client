@@ -217,6 +217,14 @@ const OptimizedEventsPage: React.FC = () => {
                   />
                 </div>
 
+                <button
+                  onClick={() => setDisplayedItems(ITEMS_PER_PAGE)}
+                  className="flex items-center gap-2 px-3 py-2.5 text-sm bg-brand-primary hover:bg-brand-ninja-gold text-white border border-brand-primary rounded-lg transition-colors"
+                >
+                  <Search className="w-4 h-4" />
+                  <span className="hidden sm:inline">Search</span>
+                </button>
+
                 {activeTab !== 'articles' && (
                   <button
                     onClick={() => setShowFilters(!showFilters)}
