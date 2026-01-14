@@ -426,7 +426,6 @@ const CoursesPage: React.FC = () => {
                   {/* Background pattern */}
                   <div className="absolute inset-0 opacity-5">
                     <div className="absolute top-2 right-2 w-8 h-8 rounded-full bg-current"></div>
-                    <div className="absolute bottom-2 left-2 w-4 h-4 rounded-full bg-current"></div>
                   </div>
                   
                   {/* Content container */}
@@ -454,8 +453,8 @@ const CoursesPage: React.FC = () => {
 
                   {/* Selected indicator */}
                   {selectedCategory === category.slug && (
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-brand-primary dark:bg-brand-ninja-gold rounded-full flex items-center justify-center shadow-lg animate-pulse">
-                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                    <div className="absolute top-2 right-2 w-8 h-8 bg-brand-primary dark:bg-brand-ninja-gold rounded-full flex items-center justify-center shadow-lg">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
                     </div>
                   )}
 
