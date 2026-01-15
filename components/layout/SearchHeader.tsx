@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-// Added for icon use and consistent styling
 import { Search, X } from 'lucide-react';
 import { UserCircle } from 'lucide-react';
 import { supabase } from '../../lib/supabaseClient';
 import { BRAND_NAME } from '../../constants';
+// Import the ThemeToggle component
+import ThemeToggle from '../ThemeToggle'; 
 
 interface SearchResult {
   id: string;
@@ -195,7 +196,7 @@ const SearchHeader: React.FC = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out bg-gradient-to-r from-white/95 via-white/90 to-white/95 backdrop-blur-xl border-b border-gradient-to-r from-purple-200/50 via-blue-200/50 to-purple-200/50 shadow-lg shadow-purple-100/20 dark:from-gray-900/95 dark:via-gray-900/90 dark:to-gray-900/95 dark:border-purple-500/20 dark:shadow-purple-900/20 ${isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
-        }`}
+      }`}
     >
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between gap-6">
@@ -343,8 +344,9 @@ const SearchHeader: React.FC = () => {
             </div>
           </div>
 
-          {/* Consistent spacing */}
-          <div className="flex items-center gap-4 flex-shrink-0">
+          {/* Consistent spacing section now contains the ThemeToggle, hidden on desktop */}
+          <div className="flex items-center gap-4 flex-shrink-0 lg:hidden">
+            <ThemeToggle />
           </div>
         </div>
       </div>
