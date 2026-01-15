@@ -454,7 +454,7 @@ const CoursesPage: React.FC = () => {
 
                   {/* Selected indicator */}
                   {selectedCategory === category.slug && (
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-brand-primary dark:bg-brand-ninja-gold rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                    <div className="absolute top-3 right-3 left-37 bottom-15 w-6 h-6 bg-brand-primary dark:bg-brand-ninja-gold rounded-full flex items-center justify-center shadow-lg animate-pulse">
                       <div className="w-2 h-2 bg-white rounded-full"></div>
                     </div>
                   )}
