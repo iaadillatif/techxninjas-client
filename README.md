@@ -1,70 +1,82 @@
-# 🌐 TechXNinjas – The Student-Centric Tech Community Platform
-
-Welcome to the official repository of **TechXNinjas**, a student-first community
+🌐 TechXNinjas – The Student-Centric Tech Community Platform
+Welcome to the official repository of TechXNinjas, a student-first community
 platform built to empower learners across India (and beyond) with tech
 resources, events, articles, courses, and collaboration opportunities — all
 under one roof.
 
----
-
 <details>
-  <summary><strong>📑 Table of Contents</strong></summary>
-  
-- [🚀 What is TechXNinjas?](#-what-is-techxninjas)
-- [🧩 Key Features](#-key-features)
-    - [✅ Public Features](#-public-features)
-    - [🔐 Logged-in User Features](#-logged-in-user-features)
-- [⚙️ Tech Stack](#️-tech-stack)
-- [📋 GSSoC 2025 Contributor Task Board](#-gssoc-2025-contributor-task-board)
-- [🔑 Environment Variables](#-environment-variables)
-- [🧪 How to Run Locally](#-how-to-run-locally)
-- [🤝 Contribution Guide](#-contribution-guide)
-- [💬 Join Our Community Discussions!](#-join-our-community-discussions)
-- [👨‍💻 Maintainers](#-maintainers)
-- [📄 License](#-license)
+<summary><strong>📑 Table of Contents</strong></summary>
+
+🚀 What is TechXNinjas?
+
+🧩 Key Features
+
+✅ Public Features
+
+🔐 Logged-in User Features
+
+⚙️ Tech Stack
+
+📋 GSSoC 2025 Contributor Task Board
+
+🔑 Environment Variables
+
+🧪 How to Run Locally
+
+🤝 Contribution Guide
+
+💬 Join Our Community Discussions!
+
+👨‍💻 Maintainers
+
+🏆 Our Contributors
+
+📄 License
 
 </details>
 
----
+🚀 What is TechXNinjas?
+TechXNinjas is a full-fledged, production-ready community platform that:
 
-## 🚀 What is TechXNinjas?
+Showcases student-centric events, hackathons, giveaways, and more.
 
-**TechXNinjas** is a full-fledged, production-ready community platform that:
+Publishes valuable articles, technical blogs, and career tips.
 
-- Showcases student-centric **events**, **hackathons**, **giveaways**, and more.
-- Publishes valuable **articles**, **technical blogs**, and **career tips**.
-- Offers community-built and mentor-led **courses** for learning.
-- Features **creator dashboards** and **user profiles**.
-- Encourages **collaboration** and real-world **open-source** exposure.
+Offers community-built and mentor-led courses for learning.
+
+Features creator dashboards and user profiles.
+
+Encourages collaboration and real-world open-source exposure.
 
 This platform is already deployed and being used live by thousands of students
 across colleges and universities.
 
----
+🧩 Key Features
+✅ Public Features:
+🎯 Homepage with live announcements and CTAs
 
-## 🧩 Key Features
+📰 Articles & Blogs page with filters and individual article pages
 
-### ✅ Public Features:
+🎓 Courses page with detailed overviews
 
-- 🎯 **Homepage** with live announcements and CTAs
-- 📰 **Articles & Blogs** page with filters and individual article pages
-- 🎓 **Courses** page with detailed overviews
-- 📅 **Events** page showcasing upcoming & past events with detail view
-- 📤 **Contact Us** form for queries
-- 👨‍💼 **Public User Profiles** for members, contributors, and mentors
-- 📃 **Static Pages**: About Us, Privacy Policy, Terms, etc.
+📅 Events page showcasing upcoming & past events with detail view
 
-### 🔐 Logged-in User Features:
+📤 Contact Us form for queries
 
-- 🧑 **User Dashboard** with saved content, uploads, and details
-- 📈 **Creator Dashboard** for article/course submission
-- ✍️ Article/Course **submission editor** (in development)
+👨‍💼 Public User Profiles for members, contributors, and mentors
 
----
+📃 Static Pages: About Us, Privacy Policy, Terms, etc.
+
+🔐 Logged-in User Features:
+🧑 User Dashboard with saved content, uploads, and details
+
+📈 Creator Dashboard for article/course submission
+
+✍️ Article/Course submission editor (in development)
+
 <pre lang="md"><code>
-## 📁 Project Structure
 
-
+📁 Project Structure
 techxninjas-client/
 ├── .github/                    # GitHub-specific configurations
 │   └── ISSUE_TEMPLATE/         # Issue templates
@@ -172,7 +184,7 @@ techxninjas-client/
 ├── index.css                  # Global styles (Tailwind base)
 ├── index.html                 # App HTML shell
 ├── index.tsx                  # App entry point
-├── LICENSE
+├── https://www.google.com/search?q=LICENSE
 ├── metadata.json
 ├── package-lock.json
 ├── package.json
@@ -186,111 +198,120 @@ techxninjas-client/
 └── vercel.json                # Vercel deployment settings
 
 </code></pre>
-## ⚙️ Tech Stack
 
-| Category            | Technology                              |
-| ------------------- | --------------------------------------- |
-| **Frontend**        | React.js (TypeScript)                   |
-| **Routing**         | React Router DOM                        |
-| **Styling**         | Tailwind CSS                            |
-| **Backend/API**     | Supabase (PostgreSQL)                   |
-| **Hosting**         | Vercel                                  |
-| **Auth**            | Supabase Auth                           |
-| **SEO & Analytics** | Meta tags, Open Graph, Google Analytics |
+⚙️ Tech Stack
+Category
 
-## 📋 GSSoC 2025 Contributor Task Board
+Technology
 
-Track all open tasks, progress, and completed contributions on our live board:  
-👉 [![Project Board](https://img.shields.io/badge/Project-View%20Board-blue?style=for-the-badge)](https://github.com/users/techxninjas/projects/1/views/4)
+Frontend
+
+React.js (TypeScript)
+
+Routing
+
+React Router DOM
+
+Styling
+
+Tailwind CSS
+
+Backend/API
+
+Supabase (PostgreSQL)
+
+Hosting
+
+Vercel
+
+Auth
+
+Supabase Auth
+
+SEO & Analytics
+
+Meta tags, Open Graph, Google Analytics
+
+📋 GSSoC 2025 Contributor Task Board
+Track all open tasks, progress, and completed contributions on our live board:
+
+👉 
 
 We regularly update this board with new issues, assignments, and progress – check here before picking an issue!
 
-## 🔑 Environment Variables
+🔑 Environment Variables
+To run the project locally, create a .env.local file and include:
 
-To run the project locally, create a `.env.local` file and include:
-
-```env
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
 
----
+🧪 How to Run Locally
+Clone the Repository
 
-## 🧪 How to Run Locally
-
-1. **Clone the Repository**
-
-```bash
-git clone https://github.com/techxninjas/techxninjas-client.git
+git clone [https://github.com/techxninjas/techxninjas-client.git](https://github.com/techxninjas/techxninjas-client.git)
 cd techxninjas
-```
 
-2. **Install Dependencies**
+Install Dependencies
 
-```bash
 npm install
-```
 
-3. **Add Environment Variables**
+Add Environment Variables
 
-Create a `.env.local` file and paste your Supabase/EmailJS keys as described
+Create a .env.local file and paste your Supabase/EmailJS keys as described
 above.
 
-4. **Run the Project**
+Run the Project
 
-```bash
 npm run dev
-```
 
-Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
+Open http://localhost:5173 to view it in your browser.
 
----
-
-## 🤝 Contribution Guide
-
+🤝 Contribution Guide
 We are open to meaningful contributions from developers, designers, and content
 creators!
 
-### You can contribute to:
+You can contribute to:
+Bug fixes
 
-- Bug fixes
-- New feature implementation
-- UI/UX improvements
-- Responsive & accessibility enhancements
-- Content (articles, tech blogs, etc.)
+New feature implementation
 
-### Steps:
+UI/UX improvements
 
-1. Fork the repo
-2. Create a new branch: `git checkout -b feature-name`
-3. Make your changes and commit: `git commit -m "Add feature"`
-4. Push to your fork: `git push origin feature-name`
-5. Create a pull request from your fork’s branch
+Responsive & accessibility enhancements
 
----
+Content (articles, tech blogs, etc.)
 
-## 💬 Join Our Community Discussions!
+Steps:
+Fork the repo
+
+Create a new branch: git checkout -b feature-name
+
+Make your changes and commit: git commit -m "Add feature"
+
+Push to your fork: git push origin feature-name
+
+Create a pull request from your fork’s branch
+
+💬 Join Our Community Discussions!
 We’re using GitHub Discussions to build a strong community for GSSoC 2025 and beyond!
 
-👉 [Click here to ask questions, introduce yourself, or share ideas!](https://github.com/techxninjas/techxninjas-client/discussions)
+👉 Click here to ask questions, introduce yourself, or share ideas!
 
-
----
-
-## 👨‍💻 Maintainers
-
-- **Aadil Latif** – [LinkedIn](https://www.linkedin.com/in/iaadillatif/)
+👨‍💻 Maintainers
+Aadil Latif – LinkedIn
 
 Feel free to reach out for discussions, suggestions, or contributions!
 
----
+🏆 Our Contributors
+A huge thank you to all the amazing people who have contributed to the TechXNinjas client! We appreciate your efforts in making this community platform better for everyone.
 
-## 📄 License
+<a href="https://www.google.com/search?q=https://github.com/techxninjas/techxninjas-client/graphs/contributors">
+<img src="https://www.google.com/search?q=https://contrib.rocks/image%3Frepo%3Dtechxninjas/techxninjas-client" />
+</a>
 
-This project is licensed under the [GPL-3.0 license](LICENSE)
+Made with contrib.rocks.
 
----
+📄 License
+This project is licensed under the GPL-3.0 license
 
-**Made with ❤️ for students, by students.**
-
----
+Made with ❤️ for students, by students.
