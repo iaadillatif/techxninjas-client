@@ -4,7 +4,7 @@ import { ArrowLeft, Mail, Phone, Users, Send, CheckCircle, AlertTriangle } from 
 import { useAuth } from '../../contexts/AuthContext';
 import { submitContactForm } from '../../services/contactService';
 import usePageTitle from '../usePageTitle';
-import CodingBackground from '../CodingBackground';
+//import CodingBackground from '../CodingBackground';
 import RevealOnScroll from '../RevealOnScroll';
 
 interface ContactFormData {
@@ -121,11 +121,11 @@ const ContactUsPage: React.FC = () => {
 
   return (
     <div className="relative min-h-screen bg-gray-50 dark:bg-brand-dark-gray">
-      <CodingBackground 
+      {/*<CodingBackground 
         intensity="low" 
         style="terminal"
         className="absolute inset-0 z-0"
-      />
+      />*/}
       
       <div className="container mx-auto px-4 py-8 relative z-10">
         <Link
