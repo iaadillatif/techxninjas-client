@@ -31,6 +31,8 @@ const navLinks: NavLinkItem[] = [
   { to: '/courses', label: 'Courses', icon: GraduationCapIcon },
   { to: '/giveaways', label: 'Giveaways', icon: GiftIcon },
   { to: '/articles', label: 'Articles', icon: FileTextIcon },
+  { to: '/resume-builder', label: 'Resume Builder', icon: SettingsIcon },
+  { to: '/feedback', label: 'Feedback', icon: BellIcon },
 ];
 
 const COLLAPSED_WIDTH = "80px"; 

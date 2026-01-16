@@ -27,6 +27,10 @@ import TechFactGenerator from './components/TechFactGenerator';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from '@vercel/analytics/react';
 
+// ✅ Newly added pages
+import ResumeBuilderPage from './components/pages/ResumeBuilderPage';
+import FeedbackPage from './components/pages/FeedbackPage';
+
 const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => {
   usePageTitle(title); 
   return (
@@ -97,6 +101,11 @@ const App: React.FC = () => {
               <Route path="/giveaways" element={<PlaceholderPage title="Giveaways" />} />
               <Route path="/contact-us" element={<ContactUsPage />} />
               <Route path="/about-us" element={<PlaceholderPage title="About Us" />} />
+              
+              {/* ✅ New routes added here */}
+              <Route path="/resume-builder" element={<ResumeBuilderPage />} />
+              <Route path="/feedback" element={<FeedbackPage />} />
+              
               <Route 
                 path="/dashboard" 
                 element={
@@ -116,6 +125,7 @@ const App: React.FC = () => {
               <Route path="/profile/:username" element={<PublicProfilePage />} />
               <Route path="/terms" element={<TermsOfServicePage />} />
               <Route path="/privacy" element={<PrivacyPolicyPage />} />
+              
               {/* Catch all route for 404 */}
               <Route path="*" element={<PlaceholderPage title="Page Not Found" />} />
             </Routes>

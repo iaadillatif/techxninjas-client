@@ -17,6 +17,8 @@
     "@vercel/speed-insights": "^1.2.0",
     "dompurify": "^3.2.6",
     "html-react-parser": "^5.2.5",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.3",
     "lucide-react": "^0.518.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
