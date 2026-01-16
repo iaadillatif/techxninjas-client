@@ -75,6 +75,7 @@ const App: React.FC = () => {
     setMainContentLayout(style);
   };
 
+
   return (
     <ErrorBoundary>
       <BrowserRouter> 
